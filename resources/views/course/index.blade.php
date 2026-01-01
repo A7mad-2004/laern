@@ -27,6 +27,9 @@
                 Dept.
             </td>
             <td>
+                new credit .
+            </td>
+            <td>
                 Edit
             </td>
             <td>
@@ -50,6 +53,12 @@
 {{--                     adding attribute--}}
 {{--                    {{ explode('-', $course->code)[0] }}--}}
                     {{ $course -> dept }}
+                </td>
+
+                <td>
+                    {{--                     adding attribute--}}
+                    {{--                    {{ explode('-', $course->code)[0] }}--}}
+                    {{ $course -> new_credit }}
                 </td>
                 <td>
                     <a  class="" href="{{route('edit.course',[ $course -> id])}}">

@@ -114,7 +114,11 @@ class courseController extends Controller
 
 
 
-            ->select('courses.id',/*'semester.id as semester_id','semester_courses.id as semester_courses_id', */'name', 'code', 'credit',/*'semester.year as year'*/)
+//           ->select(DB::raw('id,name,code,credit'))
+           ->selectRaw('* , (credit +1) as new_credit')
+             ->orderBy(DB::raw('credit '))
+//           ->where(DB::raw('credit = 3'))
+//            ->select('courses.id',/*'semester.id as semester_id','semester_courses.id as semester_courses_id', */'name', 'code', 'credit',/*'semester.year as year'*/)
 //            ->where('courses.name', 'LIKE', "java%" and )
 //            ->where('credit', '=', 2)
 //            ->where(function ( Builder $query) {
@@ -124,7 +128,7 @@ class courseController extends Controller
 //            })
 //                ->whereColumn('courses.id', 'semester.id')
              ->where('name', 'like', $search.'%')
-             ->search()
+//             ->search()
 //
 
 
