@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Course\courseController;
 use App\Http\Controllers\Location\LocationController;
+use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\semester\semesterController;
 use App\Http\Controllers\Store\StoreController;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +28,5 @@ Route::get('alldeleted',[courseController::class,'alldeleted'])->name('alldelete
 
 route::get('index/store',[storeController::class,'index'])->name('index.store');
 route::get('index/locations',[locationController::class,'index'])->name('index.location');
+Route::get('index/product',[ProductController::class,'index'])->name('index.product');
+Route::get('index/brand',[BrandController::class,'index'])->name('index.brand');

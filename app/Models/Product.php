@@ -10,4 +10,16 @@ class Product extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $appends = ['price_after_dis'];
+    public  function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+    public  function getPriceAfterDisAttribute()
+    {
+        $price_after_dic = $this->price -$this->discount;
+       return $price_after_dic;
+
+    }
+
 }
