@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
+use App\Models\Semester;
+use App\Models\SemesterCourse;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,14 +54,37 @@ class courseController extends Controller
         // لو لقيت هاتلي اياه لو ما لقيتو انشئو وهاتو
 //        $course = course::query()->findOrNew(['name'=>$name,'code'=>$code,'credit'=>$credit]);
 
+//DB::transaction(function () use ($name, $code, $credit) {
+//    $semester = Semester::query()->latest()->first();
+//    // لو لقيت الرو عدلو لو ما لقيتو ضيفة
+//    $course = course::query()->updateOrCreate(
+//        ['name'=> $name],
+//        [
+//            'code'=>$code,
+//            'credit'=>$credit
+//        ]);
+//    SemesterCourse::query()->create(['semester_id'=>$semester->id,'course_id'=>$course->id]);
+//
+//});
+// PR
+        try {
+            DB::beginTransaction();
+            $semester = Semester::query()->latest()->first();
+            // لو لقيت الرو عدلو لو ما لقيتو ضيفة
+            $course = course::query()->updateOrCreate(
+                ['name'=> $name],
+                [
+                    'code'=>$code,
+                    'credit'=>$credit
+                ]);
+            SemesterCourse::query()->create(['semester_id'=>$semester->id,
+                'course_id'=>$course->id]);
 
-        // لو لقيت الرو عدلو لو ما لقيتو ضيفة
-        $course = course::query()->updateOrCreate(
-            ['name'=> $name],
-            [
-            'code'=>$code,
-            'credit'=>$credit
-        ]);
+            DB::commit();
+        }catch (\PDOException $e){
+            DB::rollBack();
+        }
+
 
         return redirect()->back();
 //
