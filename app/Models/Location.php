@@ -10,4 +10,7 @@ class Location extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    public function Store(){
+        return $this->belongsTo(Store::class);
+    }
 }

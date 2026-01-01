@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Course\courseController;
+use App\Http\Controllers\Location\LocationController;
 use App\Http\Controllers\semester\semesterController;
+use App\Http\Controllers\Store\StoreController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,3 +23,6 @@ Route::put('course/update/{id}',[courseController::class,'update'])->name('updat
 Route::delete('course/delete/{id}',[courseController::class,'delete'])->name('delete.course');
 Route::delete('course/restore/{id}',[courseController::class,'restore'])->name('restore.course');
 Route::get('alldeleted',[courseController::class,'alldeleted'])->name('alldeleted.course');
+
+route::get('index/store',[storeController::class,'index'])->name('index.store');
+route::get('index/locations',[locationController::class,'index'])->name('index.location');
