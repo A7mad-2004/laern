@@ -21,5 +21,9 @@ class Product extends Model
        return $price_after_dic;
 
     }
+    public function StoreProducts()
+    {
+     return $this->hasMany(StoreProduct::class);
+    }
 
 }

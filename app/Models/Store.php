@@ -17,4 +17,8 @@ class Store extends Model
         // هيك بعمل انو اقلو هي هدول ال keys الي تستخدمهم
         return $this->hasOne(Location::class/*,'store_id','id'*/);
     }
+    public function StoreProducts()
+    {
+         return $this->hasMany(StoreProduct::class);
+    }
 }

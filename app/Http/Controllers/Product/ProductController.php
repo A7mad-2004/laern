@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function index(){
-        $result=Product::query()->with('brand')->get();
+        $result=Product::query()->with(['brand','StoreProducts.store'])->get();
 
 //        dd($result);
         return view('Product.index')->with(compact('result'));

@@ -18,6 +18,9 @@
             <th>
                 location
             </th>
+            <th>
+                Product
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -40,6 +43,17 @@
                 @endif
                 <td>
                     {{ $store->location->address ?? null }}
+                </td>
+                <td>
+                    @if(!$store->StoreProducts->isEmpty())
+                        <ul>
+                     @foreach($store->StoreProducts as $StoreProducts)
+                       <li>
+                           {{ $StoreProducts->product->name ?? null }}
+                       </li>
+                     @endforeach
+                    </ul>
+                    @endif
                 </td>
 
         </tr>

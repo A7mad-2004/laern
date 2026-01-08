@@ -10,4 +10,13 @@ class StoreProduct extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    public function Store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+    public function Product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
+

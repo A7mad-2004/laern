@@ -28,6 +28,9 @@
             <th>
                 Brand
             </th>
+            <th>
+                stores
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -50,6 +53,18 @@
                 </td>
                 <td>
                     {{ $Pro->brand->name ?? null}}
+                </td>
+                <td>
+                @if(!$Pro->storeproducts->isEmpty())
+                    <ul>
+                        @foreach($Pro->storeproducts as $storeproduct)
+                            <li>
+                                {{$storeproduct->store->name}}
+                            </li>
+                        @endforeach
+                    </ul>
+
+                @endif
                 </td>
             </tr>
         @endforeach
