@@ -10,8 +10,8 @@ class StoreController extends Controller
 {
     public function index(){
         // with عشان برحعلي العلاقة
-//        $result = Store::query()->with(['location','StoreProducts.Product'])->get();
-        $result = store::query()->with(['products' ,'location']);
+        $result = Store::query()->with(['location','Products'])->get();
+//        $result = store::query()->with(['products' ,'location']);
 //        dd($result->toArray());
         return view('store.index',compact('result'));
     }

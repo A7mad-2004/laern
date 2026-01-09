@@ -25,5 +25,9 @@ class Product extends Model
     {
      return $this->hasMany(StoreProduct::class);
     }
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class,'store_products','product_id','store_id');
+    }
 
 }

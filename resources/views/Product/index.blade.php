@@ -55,16 +55,25 @@
                     {{ $Pro->brand->name ?? null}}
                 </td>
                 <td>
-                @if(!$Pro->storeproducts->isEmpty())
-                    <ul>
-                        @foreach($Pro->storeproducts as $storeproduct)
-                            <li>
-                                {{$storeproduct->store->name}}
-                            </li>
-                        @endforeach
-                    </ul>
+{{--                @if(!$Pro->storeproducts->isEmpty())--}}
+{{--                    <ul>--}}
+{{--                        @foreach($Pro->storeproducts as $storeproduct)--}}
+{{--                            <li>--}}
+{{--                                {{$storeproduct->store->name}}--}}
+{{--                            </li>--}}
+{{--                        @endforeach--}}
+{{--                    </ul>--}}
 
-                @endif
+{{--                @endif--}}
+                    @if( !$Pro->stores->isEmpty() )
+                        <ul>
+                            @foreach($Pro -> stores as $stores )
+                                <li>
+                                    {{ $stores -> name ?? null }}
+                                </li>
+                                @endforeach
+                        </ul>
+                    @endif
                 </td>
             </tr>
         @endforeach
