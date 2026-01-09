@@ -44,17 +44,30 @@
                 <td>
                     {{ $store->location->address ?? null }}
                 </td>
-                <td>
-                    @if(!$store->StoreProducts->isEmpty())
-                        <ul>
-                     @foreach($store->StoreProducts as $StoreProducts)
-                       <li>
-                           {{ $StoreProducts->product->name ?? null }}
-                       </li>
-                     @endforeach
+{{--                <td>--}}
+{{--                    @if(!$store->StoreProducts->isEmpty())--}}
+{{--                        <ul>--}}
+{{--                     @foreach($store->StoreProducts as $StoreProducts)--}}
+{{--                       <li>--}}
+{{--                           {{ $StoreProducts->product->name ?? null }}--}}
+{{--                       </li>--}}
+{{--                     @endforeach--}}
+{{--                    </ul>--}}
+{{--                    @endif--}}
+{{--                </td>--}}
+                @if($store->products->isEmpty())
+                    <ul>
+                        @foreach($store->product as $pro)
+                            <li>
+                                {{ $pro->name }}
+{{--                                we need to change the position the forign key--}}
+{{--                                so we  use this approach only in one to one and one to many--}}
+                            </li>
+
+                        @endforeach
                     </ul>
-                    @endif
-                </td>
+
+                @endif
 
         </tr>
         @endforeach
