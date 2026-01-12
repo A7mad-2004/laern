@@ -15,7 +15,7 @@ class Store extends Model
     // يعني هان شان في ال location column اسمو store_id لازم بالمفرد ف راح ع الجدول ال stores وجاب الid تبعو حطو بالforaign key وصار عملية ربط
     public  function location(){
         // هيك بعمل انو اقلو هي هدول ال keys الي تستخدمهم
-        return $this->hasOne(Location::class/*,'store_id','id'*/);
+        return $this->hasOne(Location::class/*,'store_id','id'*/)->whereNotNull('id');
     }
     public function StoreProducts()
     {
@@ -27,7 +27,8 @@ class Store extends Model
 //    }
     public function Products()
     {
-        return $this->belongsToMany(Product::class,'store_products','store_id','product_id');
+        // هان الطريقة عامة ايش مكان بجيب فيه ال product بجيب بس عشرة
+        return $this->belongsToMany(Product::class,'store_products','store_id','product_id')->limit(10);
     }
 
 }
