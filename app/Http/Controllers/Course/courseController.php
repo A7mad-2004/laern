@@ -89,9 +89,9 @@ class courseController extends Controller
         return redirect()->back();
 //
     }
-    public function index( request $request)
+    public function index()
     {
-        $search = $request->input('search');
+//        $search = $request->input('search');
 //        $sql = "select * from courses";
 //        $sresult = DB::select($sql);
 //        query builder
@@ -127,7 +127,7 @@ class courseController extends Controller
 //
 //            })
 //                ->whereColumn('courses.id', 'semester.id')
-             ->where('name', 'like', $search.'%')
+//             ->where('name', 'like', $search.'%')
 //             ->search()
 //
 
@@ -169,7 +169,7 @@ class courseController extends Controller
 //        ->sum('credit');
 //        ->avg('credit');
 //        dd($sresult);
-        return view('course.index', ['courses' => $result] ,compact('search'));
+        return view('course.index', ['courses' => $result] /*,compact('search'))*/);
 
 
 
@@ -214,7 +214,7 @@ class courseController extends Controller
         return redirect()->route('index.course');
 
     }
-    public function delete( Request $request,$id)
+    public function destroy($id)
     {
 //        return view('course.delete');
 
@@ -230,13 +230,6 @@ class courseController extends Controller
 
 
     }
-    public function restore($id){
-        $result = course::query()
-            ->withTrashed()
-            ->find($id)
-            ->restore();
-        return redirect()->back();
-    }
     public function alldeleted(){
         $serch = request()->input('search');
         $result = course::query()
@@ -248,6 +241,13 @@ class courseController extends Controller
 //        }
 
         return view('course.all_deleted', ['courses' => $result , 'search' => $serch]);
+    }
+    public function restore($id){
+        $result = course::query()
+            ->withTrashed()
+            ->find($id)
+            ->restore();
+        return redirect()->back();
     }
 
 }
