@@ -31,6 +31,9 @@
             <th>
                 stores
             </th>
+            <th>
+                Edit
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -74,6 +77,9 @@
                                 @endforeach
                         </ul>
                     @endif
+                </td>
+                <td>
+                    <a href="{{route('products.edit',$Pro->id )}}">Edit</a>
                 </td>
             </tr>
         @endforeach

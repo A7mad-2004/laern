@@ -10,6 +10,15 @@ class Product extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $fillable = [
+
+        'name',
+        'discount',
+        'price',
+        'color',
+        'brand',
+
+    ];
     protected $appends = ['price_after_dis'];
     public  function brand()
     {

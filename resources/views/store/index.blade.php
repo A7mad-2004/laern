@@ -21,11 +21,15 @@
             <th>
                 Product
             </th>
+            <th>
+                Edit
+            </th>
         </tr>
         </thead>
         <tbody>
+        @foreach($result as $store)
         <tr>
-            @foreach($result as $store)
+
                 <td>
                 {{$store->name}}
                 </td>
@@ -78,8 +82,12 @@
                         </ul>
                     @endif
                 </td>
+                <td>
+                    <a href="{{route('stores.edit', [$store->id])}} "> Edit </a>
+                </td>
 
         </tr>
+
         @endforeach
         </tbody>
     </table>

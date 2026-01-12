@@ -10,7 +10,12 @@ class Store extends Model
 {
     use HasFactory;
     use SoftDeletes;
-
+    protected $fillable = [
+        'name',
+        'phone',
+        'is_delivery'
+        // أضف أي أعمدة ثانية هنا
+    ];
      // هاد هي العلاقة بينهم داخل الfunction بيربط بين الجدولين من خلال الديفولت name
     // يعني هان شان في ال location column اسمو store_id لازم بالمفرد ف راح ع الجدول ال stores وجاب الid تبعو حطو بالforaign key وصار عملية ربط
     public  function location(){
