@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index(){
-        $result=Product::query()->with(['brand','stores'])->get();
+        $search = request()->query('name',null);
+        $result=Product::query()->with(['brand','stores'])
+            ->when($search,function( Builder $query) use($search){
+                $query->where('name','like','%'.$search.'%');
+            })
+            ->paginate(5);
 
 //        dd($result);
         return view('Product.index')->with(compact('result'));

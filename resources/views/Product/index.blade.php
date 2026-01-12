@@ -7,6 +7,23 @@
 @endsection
 
 @section('main')
+    <form method="get" action="{{route('products.index')}}">
+        <h1>
+            Search
+        </h1>
+        <div class="form-group">
+            <label class="label"> Name </label>
+            <input type="text" class="form-control" name="name">
+        </div>
+        <div class="form-group">
+            <button class="btn btn success" type="submit">
+                search
+            </button>
+        </div>
+       <label>.</label>
+
+    </form>
+
     <table class="table table-hover table-bordered">
         <thead >
         <tr>
@@ -85,4 +102,7 @@
         @endforeach
         </tbody>
     </table>
+    <div class="flex">
+        {{ $result->links() }}
+    </div>
 @endsection
