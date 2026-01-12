@@ -19,12 +19,12 @@ ROUTE::put('semester/updata{id}',[semesterController::class,'update'])->name('up
 ROUTE::GET('semester/delete{id}',[semesterController::class,'delete'])->name('delete.semester');
 
 
-//Route::get('course/create',[courseController::class,'create'])->name('Create.course');
-//Route::post('course/store',[courseController::class,'store'])->name('store.course');
-//Route::get('course/index',[courseController::class,'index'])->name('index.course');
-//Route::get('course/edit/{id}',[courseController::class,'edit'])->name('edit.course');
-//Route::put('course/update/{id}',[courseController::class,'update'])->name('update.course');
-//Route::delete('course/delete/{id}',[courseController::class,'delete'])->name('delete.course');
+Route::get('course/create',[courseController::class,'create'])->name('Create.course');
+Route::post('course/store',[courseController::class,'store'])->name('store.course');
+Route::get('course/index',[courseController::class,'index'])->name('index.course');
+Route::get('course/edit/{id}',[courseController::class,'edit'])->name('edit.course');
+Route::put('course/update/{id}',[courseController::class,'update'])->name('update.course');
+Route::delete('course/delete/{id}',[courseController::class,'delete'])->name('delete.course');
 Route::resource('courses', courseController::class)
 ->only(['index','edit','update']);
 /*

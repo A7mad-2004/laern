@@ -89,15 +89,37 @@ class courseController extends Controller
         return redirect()->back();
 //
     }
-    public function index()
+    public function index(Request $request)
     {
-//        $search = $request->input('search');
+        ///11111111111111
+        $search = $request->input('search',null);
+//        if( $search = $request->input('search',null))
+//        {
+//            $result = course::query()->whereLike('name',$search)->get();
+//        }else{
+//            $result = course::query()->get();
+//        }
+        ///22222222222
+//          $coursesBuilder = Course::query();
+//          if($search = $request->input('search',null)){
+//              $coursesBuilder->where('name', 'like', '%'.$search.'%');
+//          }
+//          $result = $coursesBuilder->get();
+          ///333333333333
+        /// conditional clause
+        $result =Course::query()
+            ->when($search,function(Builder $builder) use($search){
+               $builder->where('name','like','%'.$search.'%');
+            })
+            ->get();
+
+
 //        $sql = "select * from courses";
 //        $sresult = DB::select($sql);
 //        query builder
 //         dd($sresult);
-//          $sresult = DB::table('courses')
-              $result = course::query()
+//          $result = DB::table('courses')
+//              $result = course::query()
                   // retutn all deleted
 //                  ->withTrashed()
                   // trturn only deleted
@@ -115,11 +137,12 @@ class courseController extends Controller
 
 
 //           ->select(DB::raw('id,name,code,credit'))
-           ->selectRaw('* , (credit +1) as new_credit')
-             ->orderBy(DB::raw('credit '))
+//           ->selectRaw('* , (credit +1) as new_credit')
+//             ->orderBy(DB::raw('credit '))
 //           ->where(DB::raw('credit = 3'))
 //            ->select('courses.id',/*'semester.id as semester_id','semester_courses.id as semester_courses_id', */'name', 'code', 'credit',/*'semester.year as year'*/)
-//            ->where('courses.name', 'LIKE', "java%" and )
+//            ->where('courses.name', 'LIKE', "java%"  )
+//
 //            ->where('credit', '=', 2)
 //            ->where(function ( Builder $query) {
 //                $query->where('search', 'LIKE', "java%" )
@@ -150,7 +173,8 @@ class courseController extends Controller
 //            ->whereBetween('credit',[2,11])
 //            ->wherenot('credit', '=', 2)
 //                ->whereIn('credit',[1,2,4])
-                 ->get();
+//                 ->get();
+
 //        adding attribute
 
 //        foreach ($result as $item){
@@ -169,7 +193,7 @@ class courseController extends Controller
 //        ->sum('credit');
 //        ->avg('credit');
 //        dd($sresult);
-        return view('course.index', ['courses' => $result] /*,compact('search'))*/);
+        return view('course.index', ['courses' => $result] ,compact('search'));
 
 
 
