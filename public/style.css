@@ -41,11 +41,11 @@ ol{
 
 
 }
-li{
-    display: inline-block;
-    text-decoration: none;
-    padding: 20px;
-}
+/*li{*/
+/*    display: inline-block;*/
+/*    text-decoration: none;*/
+/*    padding: 20px;*/
+/*}*/
 /*li > a{*/
 /*    text-decoration: none;*/
 /*    color: white;*/

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddProductRequest;
 use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
@@ -31,7 +32,8 @@ class ProductController extends Controller
         $brands = Brand::query()->select('id','name')->get();
         return view('Product.create',compact('brands'));
     }
-    public function store(Request $request){
+    public function store(AddProductRequest $request){
+
         $name = $request->input('name');
         $price = $request->input('price');
         $discount = $request->input('discount');
