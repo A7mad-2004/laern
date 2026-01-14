@@ -16,7 +16,7 @@ class Product extends Model
         'discount',
         'price',
         'color',
-        'brand',
+        'brand_id',
 
     ];
     protected $appends = ['price_after_dis'];

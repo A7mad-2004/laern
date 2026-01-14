@@ -7,6 +7,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -23,6 +24,31 @@ class ProductController extends Controller
 
 
 
+    }
+    public function create(){
+
+        $brands = Brand::query()->select('id','name')->get();
+        return view('Product.create',compact('brands'));
+    }
+    public function store(Request $request){
+        $name = $request->input('name');
+        $price = $request->input('price');
+        $discount = $request->input('discount');
+        $color = $request->input('color');
+        $brand_id = $request->input('brand');
+        $product = Product::query()->create([
+
+            'name' => $name,
+            'price' => $price,
+            'discount' => $discount,
+            'color' => $color,
+            'brand_id' => $brand_id
+
+
+        ]);
+        $image = $request->file('product-image');
+        Storage::disk('upload')->put("products/$name", file_get_contents($image));
+        return redirect()->back( );
     }
     public function edit($id)
     {
