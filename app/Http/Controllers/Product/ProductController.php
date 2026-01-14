@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -47,7 +48,9 @@ class ProductController extends Controller
 
         ]);
         $image = $request->file('product-image');
-        Storage::disk('upload')->put("products/$name", file_get_contents($image));
+//        $fileName = $image->getClientOriginalName();
+        $fileName = Str::random(10).'.'.$image->getClientOriginalExtension();
+        Storage::disk('upload')->put("products/$fileName", file_get_contents($image));
         return redirect()->back( );
     }
     public function edit($id)
