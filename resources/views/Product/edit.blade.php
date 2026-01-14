@@ -5,7 +5,7 @@
     </h1>
 @endsection
 @section('main')
-    <form action="{{route('products.update', $product->id)}} " method="Post">
+    <form action="{{route('products.update', $product->id)}} " method="Post" enctype="multipart/form-data">
      @csrf
         @method('put')
         <div class="form-group">
@@ -47,6 +47,15 @@
                 @endforeach
             </select>
 
+        </div>
+        <div>
+            <h1> image </h1>
+{{--            <img src="{{\Illuminate\Support\Facades\Storage::disk('upload')->url($product->image)}}" style="width: 100px">--}}
+            <img src="{{$product -> image_url }}" style="width: 100px">
+        </div>
+        <div class="form-group">
+            <label> Change Image </label>
+            <input type="file" name="product-image" class="form-control">
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-success"> Save </button>

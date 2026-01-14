@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -17,9 +18,15 @@ class Product extends Model
         'price',
         'color',
         'brand_id',
+        'image',
 
     ];
-    protected $appends = ['price_after_dis'];
+
+    protected $appends = ['price_after_dis','image_url'];
+    public function getImageUrlAttribute()
+    {
+       return Storage::disk('upload')->url($this->image);
+    }
     public  function brand()
     {
         return $this->belongsTo(Brand::class);

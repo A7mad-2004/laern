@@ -28,6 +28,9 @@
         <thead >
         <tr>
             <th>
+
+            </th>
+            <th>
                 Name
             </th>
             <th>
@@ -56,6 +59,10 @@
         <tbody>
         @foreach($result as $Pro)
             <tr>
+                <td>
+{{--                    <img src="{{ \Illuminate\Support\Facades\Storage::disk('upload')->url($Pro->image) }} " style="width: 100px">--}}
+                    <img src="{{ $Pro -> image_url }}" style="width: 100px">
+                </td>
                 <td>
                   {{ $Pro->name }}
                 </td>

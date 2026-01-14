@@ -37,20 +37,22 @@ class ProductController extends Controller
         $discount = $request->input('discount');
         $color = $request->input('color');
         $brand_id = $request->input('brand');
+        $image = $request->file('product-image');
+        $fileName = Str::random(10).'.'.$image->getClientOriginalExtension();
+        $fileBath = "products/$fileName";
         $product = Product::query()->create([
 
             'name' => $name,
             'price' => $price,
             'discount' => $discount,
             'color' => $color,
-            'brand_id' => $brand_id
+            'brand_id' => $brand_id,
+            'image'=> $fileBath
 
 
         ]);
-        $image = $request->file('product-image');
-//        $fileName = $image->getClientOriginalName();
-        $fileName = Str::random(10).'.'.$image->getClientOriginalExtension();
-        Storage::disk('upload')->put("products/$fileName", file_get_contents($image));
+        Storage::disk('upload')->put($fileBath, file_get_contents($image));
+
         return redirect()->back( );
     }
     public function edit($id)
@@ -66,15 +68,20 @@ class ProductController extends Controller
         $discount=$request->input('discount');
         $brand_id=$request->input('brand');
         $color=$request->input('color');
+        $image = $request->file('product-image');
+        $fileName = Str::random(10).'.'.$image->getClientOriginalExtension();
+        $fileBath = "products/$fileName";
 
         Product::query()->find($id)->update([
             'name'=>$name,
             'price'=>$price,
             'discount'=>$discount,
             'brand_id'=>$brand_id,
-            'color'=>$color
+            'color'=>$color,
+            'image'=>$fileBath
 
         ]);
+        Storage::disk('upload')->put($fileBath, file_get_contents($image));
         return redirect()->route('products.index');
     }
 }
