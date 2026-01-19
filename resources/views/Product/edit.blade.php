@@ -72,7 +72,7 @@
             <input type="file" name="product_image" class="form-control" value="{{$product->product_url}}">
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-success"> Save </button>
+            <button type="submit" class="btn btn-success" onclick="return confirm('Are you Sour?')"> Save </button>
         </div>
     </form>
 @endsection
