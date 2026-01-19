@@ -49,7 +49,7 @@ Route::get('alldeleted',[courseController::class,'alldeleted'])->name('alldelete
 Route::resource('stores', StoreController::class);
 
 
-route::get('index/locations',[locationController::class,'index'])->name('index.location');
+route::get('index/locations',[locationController::class,'test'])->name('index.location');
 //Route::get('index/product',[ProductController::class,'index'])->name('index.product');
 Route::resource('products', ProductController::class);
 Route::get('index/brand',[BrandController::class,'index'])->name('index.brand');

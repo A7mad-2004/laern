@@ -55,7 +55,7 @@
         </div>
         <div class="form-group">
             <label> Change Image </label>
-            <input type="file" name="product-image" class="form-control">
+            <input type="file" name="product_image" class="form-control" value="{{$product->product_url}}">
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-success"> Save </button>

@@ -39,7 +39,7 @@ class ProductController extends Controller
         $discount = $request->input('discount');
         $color = $request->input('color');
         $brand_id = $request->input('brand');
-        $image = $request->file('product-image');
+        $image = $request->file('product_image');
         $fileName = Str::random(10).'.'.$image->getClientOriginalExtension();
         $fileBath = "products/$fileName";
         $product = Product::query()->create([
@@ -70,7 +70,7 @@ class ProductController extends Controller
         $discount=$request->input('discount');
         $brand_id=$request->input('brand');
         $color=$request->input('color');
-        $image = $request->file('product-image');
+        $image = $request->file('product_image');
         $fileName = Str::random(10).'.'.$image->getClientOriginalExtension();
         $fileBath = "products/$fileName";
 

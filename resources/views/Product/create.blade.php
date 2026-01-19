@@ -65,7 +65,7 @@
         @enderror
         <div class="form-group">
             <label> Image </label>
-            <input type="file" name="product-image" class="form-control">
+            <input type="file" name="product_image" class="form-control">
         </div>
         @error('product_image')
         <div class="text-danger mt-1">{{ $message }}</div>
