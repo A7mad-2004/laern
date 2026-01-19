@@ -3,6 +3,20 @@
     <h1>
         Edit {{$product -> name}}
     </h1>
+    <div>
+        @if(session()->has('status'))
+            @if(session('status'))
+               <div class="alert alert-success">
+                   Saved
+               </div>
+            @else
+                <div class="alert alert-danger">
+                    failed
+                </div>
+            @endif
+
+        @endif
+    </div>
 @endsection
 @section('main')
     <form action="{{route('products.update', $product->id)}} " method="Post" enctype="multipart/form-data">

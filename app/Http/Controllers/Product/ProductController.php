@@ -54,8 +54,12 @@ class ProductController extends Controller
 
         ]);
         Storage::disk('upload')->put($fileBath, file_get_contents($image));
-
-        return redirect()->back( );
+        $status = false;
+        if ($product) {
+            $status = true;
+        }
+        // تخزن بال session
+        return redirect()->back()->with(['status' => $status]);
     }
     public function edit($id)
     {
@@ -74,7 +78,7 @@ class ProductController extends Controller
         $fileName = Str::random(10).'.'.$image->getClientOriginalExtension();
         $fileBath = "products/$fileName";
 
-        Product::query()->find($id)->update([
+         $product = Product::query()->find($id)->update([
             'name'=>$name,
             'price'=>$price,
             'discount'=>$discount,
@@ -84,6 +88,11 @@ class ProductController extends Controller
 
         ]);
         Storage::disk('upload')->put($fileBath, file_get_contents($image));
-        return redirect()->route('products.index');
+        $status = false;
+        if ($product) {
+            $status = true;
+        }
+        // تخزن بال session
+        return redirect()->back()->with(['status' => $status]);
     }
 }
