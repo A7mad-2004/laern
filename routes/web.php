@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Course\courseController;
+use App\Http\Controllers\Location\LocationController;
+use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\semester\semesterController;
+use App\Http\Controllers\Store\StoreController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,11 +17,39 @@ route::get('semester/index',[semesterController::class,'index'])->name('index.se
 ROUTE::GET('semester/Edit/{id}',[semesterController::class,'Edit'])->name('edit.semester');
 ROUTE::put('semester/updata{id}',[semesterController::class,'update'])->name('updata.semester');
 ROUTE::GET('semester/delete{id}',[semesterController::class,'delete'])->name('delete.semester');
+
+
 Route::get('course/create',[courseController::class,'create'])->name('Create.course');
 Route::post('course/store',[courseController::class,'store'])->name('store.course');
 Route::get('course/index',[courseController::class,'index'])->name('index.course');
 Route::get('course/edit/{id}',[courseController::class,'edit'])->name('edit.course');
 Route::put('course/update/{id}',[courseController::class,'update'])->name('update.course');
 Route::delete('course/delete/{id}',[courseController::class,'delete'])->name('delete.course');
+Route::resource('courses', courseController::class)
+->only(['index','edit','update']);
+/*
+ * create , GET , 'URI' courses/create 'NAME' courses.create
+ * store , POST , 'URI' courses 'NAME' courses.store
+ * index , GET , 'URI' courses 'NAME' courses.index
+ * edit , GET , 'URI' courses/{id}/edit 'NAME' courses.edit
+ * show ,GET , 'URI' courses/{id} 'NAME' courses.show
+ * update , PUT/PATCH , 'URI' courses/{id} 'NAME' courses.update
+ * destroy , DELETE , 'URI' courses/{id} 'NAME' courses.destroy
+ */
+
+
 Route::delete('course/restore/{id}',[courseController::class,'restore'])->name('restore.course');
+
+
 Route::get('alldeleted',[courseController::class,'alldeleted'])->name('alldeleted.course');
+
+//route::get('index/store',[storeController::class,'index'])->name('index.store');
+//Route::get('store/{id}/edit',[storeController::class,'edit'])->name('edit.store');
+//Route::put('stores/{id}',[storeController::class,'update'])->name('update.store');
+Route::resource('stores', StoreController::class);
+
+
+route::get('index/locations',[locationController::class,'test'])->name('index.location');
+//Route::get('index/product',[ProductController::class,'index'])->name('index.product');
+Route::resource('products', ProductController::class);
+Route::get('index/brand',[BrandController::class,'index'])->name('index.brand');

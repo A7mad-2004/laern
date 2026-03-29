@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Course;
 
 use App\Http\Controllers\Controller;
+use App\Models\Semester;
+use App\Models\SemesterCourse;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -52,27 +54,72 @@ class courseController extends Controller
         // لو لقيت هاتلي اياه لو ما لقيتو انشئو وهاتو
 //        $course = course::query()->findOrNew(['name'=>$name,'code'=>$code,'credit'=>$credit]);
 
+//DB::transaction(function () use ($name, $code, $credit) {
+//    $semester = Semester::query()->latest()->first();
+//    // لو لقيت الرو عدلو لو ما لقيتو ضيفة
+//    $course = course::query()->updateOrCreate(
+//        ['name'=> $name],
+//        [
+//            'code'=>$code,
+//            'credit'=>$credit
+//        ]);
+//    SemesterCourse::query()->create(['semester_id'=>$semester->id,'course_id'=>$course->id]);
+//
+//});
+// PR
+        try {
+            DB::beginTransaction();
+            $semester = Semester::query()->latest()->first();
+            // لو لقيت الرو عدلو لو ما لقيتو ضيفة
+            $course = course::query()->updateOrCreate(
+                ['name'=> $name],
+                [
+                    'code'=>$code,
+                    'credit'=>$credit
+                ]);
+            SemesterCourse::query()->create(['semester_id'=>$semester->id,
+                'course_id'=>$course->id]);
 
-        // لو لقيت الرو عدلو لو ما لقيتو ضيفة
-        $course = course::query()->updateOrCreate(
-            ['name'=> $name],
-            [
-            'code'=>$code,
-            'credit'=>$credit
-        ]);
+            DB::commit();
+        }catch (\PDOException $e){
+            DB::rollBack();
+        }
+
 
         return redirect()->back();
 //
     }
-    public function index( request $request)
+    public function index(Request $request)
     {
-        $search = $request->input('search');
+        ///11111111111111
+        $search = $request->input('search',null);
+//        if( $search = $request->input('search',null))
+//        {
+//            $result = course::query()->whereLike('name',$search)->get();
+//        }else{
+//            $result = course::query()->get();
+//        }
+        ///22222222222
+//          $coursesBuilder = Course::query();
+//          if($search = $request->input('search',null)){
+//              $coursesBuilder->where('name', 'like', '%'.$search.'%');
+//          }
+//          $result = $coursesBuilder->get();
+          ///333333333333
+        /// conditional clause
+        $result =Course::query()
+            ->when($search,function(Builder $builder) use($search){
+               $builder->where('name','like','%'.$search.'%');
+            })
+            ->get();
+
+
 //        $sql = "select * from courses";
 //        $sresult = DB::select($sql);
 //        query builder
 //         dd($sresult);
-//          $sresult = DB::table('courses')
-              $result = course::query()
+//          $result = DB::table('courses')
+//              $result = course::query()
                   // retutn all deleted
 //                  ->withTrashed()
                   // trturn only deleted
@@ -89,8 +136,13 @@ class courseController extends Controller
 
 
 
-            ->select('courses.id',/*'semester.id as semester_id','semester_courses.id as semester_courses_id', */'name', 'code', 'credit',/*'semester.year as year'*/)
-//            ->where('courses.name', 'LIKE', "java%" and )
+//           ->select(DB::raw('id,name,code,credit'))
+//           ->selectRaw('* , (credit +1) as new_credit')
+//             ->orderBy(DB::raw('credit '))
+//           ->where(DB::raw('credit = 3'))
+//            ->select('courses.id',/*'semester.id as semester_id','semester_courses.id as semester_courses_id', */'name', 'code', 'credit',/*'semester.year as year'*/)
+//            ->where('courses.name', 'LIKE', "java%"  )
+//
 //            ->where('credit', '=', 2)
 //            ->where(function ( Builder $query) {
 //                $query->where('search', 'LIKE', "java%" )
@@ -98,8 +150,8 @@ class courseController extends Controller
 //
 //            })
 //                ->whereColumn('courses.id', 'semester.id')
-             ->where('name', 'like', $search.'%')
-             ->search()
+//             ->where('name', 'like', $search.'%')
+//             ->search()
 //
 
 
@@ -121,7 +173,8 @@ class courseController extends Controller
 //            ->whereBetween('credit',[2,11])
 //            ->wherenot('credit', '=', 2)
 //                ->whereIn('credit',[1,2,4])
-                 ->get();
+//                 ->get();
+
 //        adding attribute
 
 //        foreach ($result as $item){
@@ -185,7 +238,7 @@ class courseController extends Controller
         return redirect()->route('index.course');
 
     }
-    public function delete( Request $request,$id)
+    public function destroy($id)
     {
 //        return view('course.delete');
 
@@ -201,13 +254,6 @@ class courseController extends Controller
 
 
     }
-    public function restore($id){
-        $result = course::query()
-            ->withTrashed()
-            ->find($id)
-            ->restore();
-        return redirect()->back();
-    }
     public function alldeleted(){
         $serch = request()->input('search');
         $result = course::query()
@@ -219,6 +265,13 @@ class courseController extends Controller
 //        }
 
         return view('course.all_deleted', ['courses' => $result , 'search' => $serch]);
+    }
+    public function restore($id){
+        $result = course::query()
+            ->withTrashed()
+            ->find($id)
+            ->restore();
+        return redirect()->back();
     }
 
 }

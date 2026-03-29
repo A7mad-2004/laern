@@ -4,7 +4,7 @@
 @endsection
 
 @section('main')
-    <form action="{{route('index.course')}}" style="margin-bottom: 20px">
+    <form action="{{route('courses.index')}}" style="margin-bottom: 20px">
         <label>serch</label>
         <input type="text" name="search" class="form-control" value="{{$search}}">
      <button type="submit" class="btn btn-danger" style="margin-left: 0px ;margin-top: 20px"> search</button>
@@ -25,6 +25,9 @@
             </td>
             <td>
                 Dept.
+            </td>
+            <td>
+                new credit .
             </td>
             <td>
                 Edit
@@ -51,8 +54,14 @@
 {{--                    {{ explode('-', $course->code)[0] }}--}}
                     {{ $course -> dept }}
                 </td>
+
                 <td>
-                    <a  class="" href="{{route('edit.course',[ $course -> id])}}">
+                    {{--                     adding attribute--}}
+                    {{--                    {{ explode('-', $course->code)[0] }}--}}
+                    {{ $course -> new_credit }}
+                </td>
+                <td>
+                    <a  class="" href="{{route('courses.edit',[ $course -> id])}}">
                         edit
 
                     </a>
